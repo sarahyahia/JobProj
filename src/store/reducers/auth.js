@@ -1,5 +1,4 @@
-import {LOGIN, REGISTER, BAD_REQUEST_400, LOGOUT, EMAIL_CHANGED} from '../actions/auth';
-import {useHistory  } from 'react-router-dom';
+import {LOGIN, REGISTER, BAD_REQUEST_400, LOGOUT, EMAIL_CHANGED, RESET_ERROR} from '../actions/auth';
 
 const initialState = {
     isLoggedIn: false,
@@ -56,6 +55,12 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 error: action.payload
             };
+        
+        case RESET_ERROR:
+            return {
+                ...state,
+                error: action.payload
+            }
 
         default:
             return state;

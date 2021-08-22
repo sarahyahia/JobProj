@@ -18,7 +18,7 @@ const Header = ({ logout}) => {
     }
 
     return (
-        <div className="header border border-dark">
+        <div className="header">
             <form onSubmit={handleSubmit}>
                 <input 
                     type="text" 

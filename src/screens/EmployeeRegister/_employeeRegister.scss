@@ -1,0 +1,101 @@
+@import '../../base';
+
+body, html {
+    height: 100%;
+    
+}
+
+.Col__box{
+    background-color: rgba(12, 11, 12, 0.6),;
+    height: 900px;
+    padding: 60px 68px 40px;
+    border-radius: 2%;
+}
+
+.empReg-form{
+    margin: 10vh 0 10vh 0;
+    height: 900px;
+    width:50vw;
+    margin-bottom: 10vh;
+}
+.empReg {
+    overflow: hidden;
+    background-image: url("../../images/registerBackground.jpg" ) ;
+    object-fit: cover;
+    background-position: center;
+    background-repeat: repeat;
+    background-size: cover;
+    // filter: brightness(0.5);
+}
+
+.background {
+    position: absolute;
+    object-fit: cover;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index: -3 ;
+    filter: brightness(0.5);
+}
+
+.background img {
+    height: 1200px;
+
+}
+
+
+/* for X-Small devices */
+@media (max-width: 575.98px) {
+
+    .empReg .empReg-form {
+        height: 1000px;
+    }
+}
+
+/* for Small devices */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .empReg .background img {
+        height: 100%;
+    
+    }
+
+    .empReg .empReg-form {
+        height: 838px;
+    }
+}
+
+/* for Medium devices */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .empReg .background img {
+        height: 1136px;
+    
+    }
+
+    .empReg .empReg-form {
+        height: 832px;
+    }
+}
+
+/* for Large devices */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .empReg .background img {
+        height: 1365px;
+    
+    }
+
+    .empReg .empReg-form {
+        height: 1084px;
+    }
+}
+
+/* for X-Large devices */
+@media (min-width: 1200px) {
+    .empReg .background img {
+        height: 1106px; 
+    }
+
+    .empReg .empReg-form {
+        height: 824px;
+    }
+}

@@ -5,11 +5,23 @@ export const LOGOUT = 'LOGOUT';
 export const REGISTER = 'REGISTER';
 export const EMAIL_CHANGED = 'EMAIL_CHANGED';
 export const BAD_REQUEST_400 = 'BAD_REQUEST_400';
+export const RESET_ERROR = 'RESET_ERROR';
 
 const token = localStorage.getItem('token');
 
+export const resetError = (error) => (dispatch) => {
+    return (
+        dispatch({
+            type: RESET_ERROR,
+            payload: error
+        })
+    )
+}
+
+
 export const login = (request) => async (dispatch) => {
     console.log(request);
+    
     await axios.post(`http://127.0.0.1:8000/auth/login/`, request)
         .then(
             (response) => {

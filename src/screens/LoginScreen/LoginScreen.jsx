@@ -1,21 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "./_loginScreen.scss"
 
 import { connect } from "react-redux";
-import { login } from '../../store/actions/auth';
+import { login, resetError } from '../../store/actions/auth';
 
 import {Form, Button, Col, Row} from 'react-bootstrap';
 
 import { NavLink } from 'react-router-dom';
-import { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 
-const LoginScreen = ({isLoggedIn,login}) => {
+const LoginScreen = ({isLoggedIn,login, resetError}) => {
 
     const [username, setUsername] = useState('');
-    const [values, setValues] = React.useState({
+    const [values, setValues] = useState({
         password: "",
         showPassword: false,
     });
+
+    // resetError(1);
 
     const onChangeUsername = (e) => {
         const username = e.target.value;
@@ -41,7 +43,10 @@ const LoginScreen = ({isLoggedIn,login}) => {
         login({username, password});
     }
 
-    return (
+    return (<>
+        {isLoggedIn && localStorage.token ?
+            <Redirect to="/" />
+            :
         <div className="login">
         <div className="col-9 col-md-7 col-lg-5 col-xl-4 mx-auto login-form">
             <Row className="justify-content-md-center">
@@ -81,16 +86,21 @@ const LoginScreen = ({isLoggedIn,login}) => {
             </Row>
         </div>
         </div>
+        }</>
     )
 }
 
 const mapStateToProps = (state) => ({
+    error: state.authUser.error,
     isLoggedIn: state.authUser.isLoggedIn
 });
 
 const mapDispatchToProps = (dispatch) => ({
     login: (request) => {
         dispatch(login(request))
+    },
+    resetError: (error)=>{
+        dispatch(resetError(error))
     }
 });
 

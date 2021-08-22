@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './_registerScreen.scss';
 
 import { connect } from "react-redux";
@@ -7,7 +7,6 @@ import { register } from '../../store/actions/auth';
 import {Form, Button, Col, Row, Alert} from 'react-bootstrap';
 
 import { NavLink,useHistory, Redirect  } from 'react-router-dom';
-import { useState } from 'react';
 
 const RegisterScreen = ({register, error}) => {
 
@@ -15,6 +14,7 @@ const RegisterScreen = ({register, error}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
+    let history = useHistory();
 
     const onChangeUsername = (e) => {
         const username = e.target.value;
@@ -35,6 +35,13 @@ const RegisterScreen = ({register, error}) => {
         const password2 = e.target.value;
         setPassword2(password2);
     };
+
+    useEffect(()=>{
+
+        if(error == null){
+            history.push(`/login`);
+        }
+    });
 
     const handleSubmit = (e) => {
         e.preventDefault();
