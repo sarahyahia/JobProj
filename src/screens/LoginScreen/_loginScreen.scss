@@ -1,0 +1,50 @@
+@import "../../base";
+
+
+.Col__box{
+    background-color: rgba(167,112,211,.25),;
+    height: 500px;
+    margin: 5vh;
+    padding: 60px 68px 40px;
+    border-radius: 2%;
+}
+
+// .checkbox Form.Check:checked {
+//     border-color: red;
+//     background-color:red;
+// }
+
+/* for X-Small devices */
+@media (max-width: 575.98px) {
+    .login .login-form {
+        height: 823px;
+    }
+}
+
+/* for Small devices */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .login .login-form {
+        height: 838px;
+    }
+}
+
+/* for Medium devices */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .login .login-form {
+        height: 832px;
+    }
+}
+
+/* for Large devices */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .login .login-form {
+        height: 1084px;
+    }
+}
+
+/* for X-Large devices */
+@media (min-width: 1200px) {
+    .login .login-form {
+        height: 824px;
+    }
+}
