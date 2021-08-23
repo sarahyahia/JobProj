@@ -1,0 +1,22 @@
+@import '../../base';
+
+.navbar {
+    /* background-color: #0e0e0e; */
+    top: 0;
+    z-index: 2;
+    width: 100%;
+    transition-timing-function: ease-in;
+    transition: all 0.5s;
+    padding:10px 0px;
+  }
+
+.navLink {
+    color: #D6C9E1 ;
+    transition-timing-function: ease-in;
+    transition: all 0.5s;
+    margin-right: 2rem;
+}
+.navLink:hover {
+    color: #A770D3 ;
+    font-weight: 500 !important;
+}
