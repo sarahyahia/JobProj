@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import "./_loginScreen.scss"
 
 import { connect } from "react-redux";

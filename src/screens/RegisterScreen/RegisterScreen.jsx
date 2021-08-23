@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import './_registerScreen.scss';
 
 import { connect } from "react-redux";
-import { register } from '../../store/actions/auth';
+import { register, changeEmail } from '../../store/actions/auth';
 
 import {Form, Button, Col, Row, Alert} from 'react-bootstrap';
 
-import { NavLink,useHistory, Redirect  } from 'react-router-dom';
+import { NavLink, useHistory} from 'react-router-dom';
 
-const RegisterScreen = ({register, error}) => {
+const RegisterScreen = ({register, error, changeEmail}) => {
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -24,6 +24,7 @@ const RegisterScreen = ({register, error}) => {
     const onChangeEmail = (e) => {
         const email = e.target.value;
         setEmail(email);
+        changeEmail(email);
     };
     
     const onChangePassword = (e) => {
@@ -86,7 +87,7 @@ const RegisterScreen = ({register, error}) => {
 
                         <div className="mt-3">
                             <span>Already have an account? </span>
-                            <NavLink to="/login" className="text-info">Log in</NavLink>
+                            <NavLink to="/emp/register" className="text-info">Log in</NavLink>
                         </div>
                     </Form>
                 </Col>
@@ -97,12 +98,15 @@ const RegisterScreen = ({register, error}) => {
 }
 
 const mapStateToProps = (state) => ({
-    error: state.authUser.error
+    error: state.authUser.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
     register: (request) => {
         dispatch(register(request))
+    },
+    changeEmail: (email) => {
+        dispatch(changeEmail(email))
     }
 });
 

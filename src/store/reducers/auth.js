@@ -4,7 +4,7 @@ const initialState = {
     isLoggedIn: false,
     accessToken: null,
     user: {
-        email: '',
+        userEmail: '',
     },
     userCreated: {
         msg: '',
@@ -39,7 +39,7 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 user: {
                     ...state.user,
-                    email: action.payload
+                    userEmail: action.payload
                 }
             };
         
