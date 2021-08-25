@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './_registerScreen.scss';
 
 import { connect } from "react-redux";
-import { register, changeEmail } from '../../store/actions/auth';
+import { register, changeEmail, resetError } from '../../store/actions/auth';
 
 import {Form, Button, Col, Row, Alert} from 'react-bootstrap';
 
 import { NavLink, useHistory} from 'react-router-dom';
 
-const RegisterScreen = ({register, error, changeEmail}) => {
+const RegisterScreen = ({register, error, resetError, changeEmail}) => {
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
+    const [err, setErr] = useState('');
+    
     let history = useHistory();
 
     const onChangeUsername = (e) => {
@@ -37,16 +39,14 @@ const RegisterScreen = ({register, error, changeEmail}) => {
         setPassword2(password2);
     };
 
-    useEffect(()=>{
-
-        if(error == null){
-            history.push(`/login`);
-        }
-    });
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        register({username, email, password, password2});
+        if(password !== password2){
+            setErr("The password confirmation does not match.")
+        }else{
+            setErr('');
+            register({username, email, password, password2});
+        }
     }
 
     return (
@@ -56,19 +56,25 @@ const RegisterScreen = ({register, error, changeEmail}) => {
                 <Col className="Col__box">
                     <Form onSubmit={handleSubmit}>
                         <h2>Create Your Account</h2>
-                        {error === 400? 
-                            <Alert variant="danger">Invalid Credientials</Alert>
-                            :
-                            null
+                        {err ? 
+                            <Alert variant="danger">{err}</Alert>
+                            :error === null? 
+                            <Alert variant="success">The account has been created successfully
+                            go to <NavLink to="/login" className="text-dark">Log in</NavLink> page</Alert>
+                            :error === 400? 
+                            <Alert variant="danger">This username already exist</Alert>
+                            :error === 500? 
+                            <Alert variant="danger">Server error try again in another time.</Alert>
+                            :null
                         }
                         <Form.Group className="mb-3" controlId="formBasicusername">
                             <Form.Label>Username</Form.Label>
-                            <Form.Control type="username" placeholder="Enter username" value={username} onChange={onChangeUsername} />
+                            <Form.Control type="username" placeholder="Enter username" value={username} onChange={onChangeUsername} required="required" />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicemail">
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" placeholder="Enter email" value={email} onChange={onChangeEmail} />
+                            <Form.Control type="email" placeholder="Enter email" value={email} onChange={onChangeEmail} required="required" />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formGroupPassword">
@@ -107,7 +113,10 @@ const mapDispatchToProps = (dispatch) => ({
     },
     changeEmail: (email) => {
         dispatch(changeEmail(email))
-    }
+    },
+    resetError: (error)=>{
+        dispatch(resetError(error))
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterScreen);

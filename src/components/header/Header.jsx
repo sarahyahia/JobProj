@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {logout} from '../../store/actions/auth'
 
-const Header = ({ logout}) => {
+const Header = ({isLoggedIn, logout}) => {
 
     const [search,setSearch] =useState('')
     // let history =useHistory()
@@ -30,12 +30,20 @@ const Header = ({ logout}) => {
                 </button>
 
             </form>
-            <button type="logout" onClick={logout}>
-                <FiLogOut size={22} /> Logout
+            {isLoggedIn && localStorage.token ?
+                <button type="logout" onClick={logout}>
+                    <FiLogOut size={22} /> Logout
                 </button>
+                :  null
+            }
         </div>
     )
 }
+
+const mapStateToProps = (state) => ({
+    error: state.authUser.error,
+    isLoggedIn: state.authUser.isLoggedIn
+});
 
 const mapDispatchToProps = (dispatch) => ({
     logout: () => {
@@ -43,4 +51,4 @@ const mapDispatchToProps = (dispatch) => ({
     },
   });
   
-  export default withRouter(connect(null, mapDispatchToProps)(Header));
+  export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

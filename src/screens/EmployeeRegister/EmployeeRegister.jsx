@@ -4,8 +4,10 @@ import Header from '../../components/header/Header';
 
 import './_employeeRegister.scss';
 
-import { Button, Col, Row, Alert} from 'react-bootstrap';
-import Form from 'react-bootstrap/Form';
+import {Form, Button, Col, Row, Alert} from 'react-bootstrap';
+
+
+import CreatableSelect from 'react-select/creatable';
 
 import { connect } from "react-redux";
 
@@ -66,13 +68,19 @@ const EmployeeRegister = ({userEmail}) => {
         }
     }
 
+    const options = [
+        { value: 'chocolate', label: 'Chocolate' },
+        { value: 'strawberry', label: 'Strawberry' },
+        { value: 'vanilla', label: 'Vanilla' }
+    ]
+
     return (
         <>
         <Header/>
         <div className="empReg">
            <div className="col-9 col-md-7 col-lg-5 col-xl-4 mx-auto empReg-form">
             <Row className="justify-content-md-center">
-                <Col className="Col__box">
+                <Col className="Col__box_emp">
                     <Form onSubmit={handleSubmit}>
                         <h2 className="mb-4">Build Your Profile</h2>
                         {error? 
@@ -102,7 +110,7 @@ const EmployeeRegister = ({userEmail}) => {
 
                         <Form.Group className="mb-3" controlId="formBasicnumber">
                             <Form.Label>Programming Languages</Form.Label>
-                            <Form.Control  placeholder="Enter your Programming Languages"  />
+                            <CreatableSelect options={options} isMulti isClearable />
                         </Form.Group>
 
                         <Form.Label>Experience Level</Form.Label>

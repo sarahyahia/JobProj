@@ -5,8 +5,8 @@ body, html {
     
 }
 
-.Col__box{
-    background-color: rgba(12, 11, 12, 0.6),;
+.Col__box_emp{
+    background-color: rgba(19, 18, 19, 0.6) ;
     height: 900px;
     padding: 60px 68px 40px;
     border-radius: 2%;
@@ -47,9 +47,13 @@ body, html {
 
 /* for X-Small devices */
 @media (max-width: 575.98px) {
-
+    .Col__box{
+        height: 100%;
+        width: 100%;
+    }
     .empReg .empReg-form {
         height: 1000px;
+        width: 100%;
     }
 }
 
