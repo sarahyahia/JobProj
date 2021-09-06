@@ -46,7 +46,7 @@ export const register = (request) => async (dispatch) => {
                 console.log(response.status);
                 dispatch({
                     type: REGISTER,
-                    payload: response.statusText,
+                    payload: response.data.token,
                     error: response.status
                 });
             },

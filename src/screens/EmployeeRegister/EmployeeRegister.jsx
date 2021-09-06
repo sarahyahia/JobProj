@@ -1,14 +1,13 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 
 import Header from '../../components/header/Header';
 
 import './_employeeRegister.scss';
 
 import {Form, Button, Col, Row, Alert} from 'react-bootstrap';
-
-
 import CreatableSelect from 'react-select/creatable';
 
+import {getprogramlangs, addemp} from '../../store/actions/emp';
 import { connect } from "react-redux";
 
 // import { NavLink } from 'react-router-dom';
@@ -17,20 +16,34 @@ import { connect } from "react-redux";
 function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
   }
-const EmployeeRegister = ({userEmail}) => {
+const EmployeeRegister = ({userEmail, langs, getprogramlangs}) => {
 
-    const email= userEmail;
+    const [email, setEmail] = useState('');
     const [error, setError] = useState('');
     const [name, setName] = useState('');
+    const [job_title, setJobTitle] = useState('');
     const [city, setCity] = useState('');
     const [nationalID, setNationalID] = useState('');
     const [experience, setExperience] = useState('');
     const [bio, setBio] = useState('');
-
+    
+    useEffect(()=>{
+        getprogramlangs();
+    },[]);
     
     const onChangeName = (e) => {
         const name = e.target.value;
         setName(name);
+    };
+    
+    const onChangeJobTitle = (e) => {
+        const job_title = e.target.value;
+        setJobTitle(job_title);
+    };
+
+    const onChangeEmail = (e) => {
+        const email = e.target.value;
+        setEmail(email);
     };
     
     const onChangeCity = (e) => {
@@ -42,7 +55,7 @@ const EmployeeRegister = ({userEmail}) => {
         const nationalID = e.target.value;
         setNationalID(nationalID);
     };
-
+    
     const onChangeExperience = (e) => {
         const experience = e.target.value;
         setExperience(experience);
@@ -52,9 +65,10 @@ const EmployeeRegister = ({userEmail}) => {
         const bio = e.target.value;
         setBio(bio);
     };
-
+    
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log('d')
         //validation for national ID
         if(!nationalID ){
             setError('Please add your national ID!');
@@ -63,11 +77,14 @@ const EmployeeRegister = ({userEmail}) => {
         }else if (! isNumeric(nationalID)){
             setError('National ID must be a number!');
         }else{
-        console.log(experience);
-        //here redux action function
+            //here redux action function
+            const programming_language = []
+            const experience_level=experience
+            addemp({name,email,job_title,nationalID,city, programming_language, experience_level})
         }
     }
-
+    // console.log(langs)
+    
     const options = [
         { value: 'chocolate', label: 'Chocolate' },
         { value: 'strawberry', label: 'Strawberry' },
@@ -78,12 +95,12 @@ const EmployeeRegister = ({userEmail}) => {
         <>
         <Header/>
         <div className="empReg">
-           <div className="col-9 col-md-7 col-lg-5 col-xl-4 mx-auto empReg-form">
+           <div className="col-9 col-md-7 col-lg-5 col-xl-4 mx-auto ">
             <Row className="justify-content-md-center">
                 <Col className="Col__box_emp">
                     <Form onSubmit={handleSubmit}>
                         <h2 className="mb-4">Build Your Profile</h2>
-                        {error? 
+                        {1? 
                             <Alert variant="danger">{error}</Alert>
                             :
                             null
@@ -93,9 +110,14 @@ const EmployeeRegister = ({userEmail}) => {
                             <Form.Control type="name" placeholder="Enter name" value={name} onChange={onChangeName} />
                         </Form.Group>
 
+                        <Form.Group className="mb-3" controlId="formBasicname">
+                            <Form.Label>Job Title</Form.Label>
+                            <Form.Control type="name" placeholder="Enter Job Title" value={job_title} onChange={onChangeJobTitle} />
+                        </Form.Group>
+
                         <Form.Group className="mb-3" controlId="formBasicemail">
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" placeholder="Enter email" value={email} />
+                            <Form.Control type="email" placeholder="Enter email" value={userEmail || email} onChange={onChangeEmail} />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasiccity">
@@ -110,7 +132,7 @@ const EmployeeRegister = ({userEmail}) => {
 
                         <Form.Group className="mb-3" controlId="formBasicnumber">
                             <Form.Label>Programming Languages</Form.Label>
-                            <CreatableSelect options={options} isMulti isClearable />
+                            <CreatableSelect options={langs} isMulti isClearable />
                         </Form.Group>
 
                         <Form.Label>Experience Level</Form.Label>
@@ -126,7 +148,7 @@ const EmployeeRegister = ({userEmail}) => {
                             <Form.Control as="textarea" rows={3} value={bio} onChange={onChangeBio} />
                         </Form.Group>
 
-                        <Button variant="danger" type="submit">
+                        <Button variant="danger" type="submit" onClick={handleSubmit}>
                             Submit
                         </Button>
                     </Form>
@@ -141,15 +163,19 @@ const EmployeeRegister = ({userEmail}) => {
 
 const mapStateToProps = (state) => ({
     userEmail: state.authUser.user.userEmail,
+    langs:state.emp.emp,
     error: state.authUser.error
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-//     registerUser: (request) => {
-//         dispatch(registerUser(request))
-//     }
-// });
+const mapDispatchToProps = (dispatch) => ({
+    getprogramlangs: () => {
+        dispatch(getprogramlangs())
+    },
+    addemp :(request) => {
+        dispatch(addemp(request))
+    },
+});
 
 // export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm);
 
-export default connect(mapStateToProps, null)(EmployeeRegister)
+export default connect(mapStateToProps, mapDispatchToProps)(EmployeeRegister)

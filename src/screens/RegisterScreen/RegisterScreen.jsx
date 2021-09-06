@@ -14,6 +14,7 @@ const RegisterScreen = ({register, error, resetError, changeEmail}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
+    const [isEmployee, setIsEmployee] = useState(false);
     const [err, setErr] = useState('');
     
     let history = useHistory();
@@ -39,12 +40,18 @@ const RegisterScreen = ({register, error, resetError, changeEmail}) => {
         setPassword2(password2);
     };
 
+    const onCheckChange = (e) => { 
+        const isEmployee = e.target.checked;
+        setIsEmployee(isEmployee);
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if(password !== password2){
             setErr("The password confirmation does not match.")
         }else{
             setErr('');
+            // const is_staff = isEmployee
             register({username, email, password, password2});
         }
     }
@@ -61,10 +68,10 @@ const RegisterScreen = ({register, error, resetError, changeEmail}) => {
                             :error === null? 
                             <Alert variant="success">The account has been created successfully
                             go to <NavLink to="/login" className="text-dark">Log in</NavLink> page</Alert>
-                            :error === 400? 
-                            <Alert variant="danger">This username already exist</Alert>
                             :error === 500? 
                             <Alert variant="danger">Server error try again in another time.</Alert>
+                            :error === 400? 
+                            <Alert variant="danger">This username already exist</Alert>
                             :null
                         }
                         <Form.Group className="mb-3" controlId="formBasicusername">
@@ -86,7 +93,9 @@ const RegisterScreen = ({register, error, resetError, changeEmail}) => {
                             <Form.Label>Confirm Password</Form.Label>
                             <Form.Control type="password" name="password2" value={password2} onChange={onChangePassword2} required="required" placeholder="Confirm your password" />
                         </Form.Group>
-                        
+                        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                            <Form.Check onChange={onCheckChange} type="checkbox" label="Searching for a job?" />
+                        </Form.Group>
                         <Button variant="danger" type="submit">
                             Submit
                         </Button>

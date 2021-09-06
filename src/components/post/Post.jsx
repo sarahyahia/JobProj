@@ -3,7 +3,9 @@ import { useState,useEffect } from 'react';
 
 import {getjobs} from '../../store/actions/job'
 import { connect } from "react-redux";
-import store from '../../store/index';
+// import store from '../../store/index';
+
+import { NavLink} from 'react-router-dom';
 
 import ShowMoreText from "react-show-more-text";
 import moment from 'moment';
@@ -13,7 +15,7 @@ import {Card, Button} from 'react-bootstrap';
 
 
 const JobPost = ({jobs, getjobs}) => {
-
+    console.log(jobs)
     useEffect(()=>{
         getjobs();
     },[]);
@@ -23,7 +25,7 @@ const JobPost = ({jobs, getjobs}) => {
         jobs.map((item,index)=>(
 <Card className="card_box">
         <Card.Body key={index}>
-            <Card.Title id={item.id}>{item.job_title}</Card.Title>
+            <Card.Title id={item.id}><NavLink to={`/job/${item.id}`}className="text-dark">{item.job_title}</NavLink></Card.Title>
             <Card.Subtitle className="mb-2 text-muted">{moment.duration(moment().startOf('day').diff(moment(item.created_at, "YYYY-MM-DD"))).asDays()} days ago</Card.Subtitle>
             <Card.Subtitle className="mb-2 text-danger">{item.job_status?"closed":"open"}</Card.Subtitle>
             <ShowMoreText
@@ -39,8 +41,7 @@ const JobPost = ({jobs, getjobs}) => {
                 truncatedEndingComponent={"... "}
             >
                 <Card.Text>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima sunt beatae facilis cum repudiandae dolorum praesentium dicta placeat, a aliquid modi quae rem tenetur optio cupiditate provident dignissimos. Velit, consequatur.
-                    {/* {item.description} */}
+                    {item.description}
                 </Card.Text>
                 
                 <Card.Header>Requirements</Card.Header>
@@ -50,9 +51,6 @@ const JobPost = ({jobs, getjobs}) => {
 
                 </ul>
             </ShowMoreText>
-                <Button variant="danger" className="btn-sm mt-2" type="submit">
-                    Apply for the job
-                </Button>
         </Card.Body>
         </Card>
     ))

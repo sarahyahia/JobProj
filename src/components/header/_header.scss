@@ -21,6 +21,11 @@
         border: 1.2px solid;
         background-color: $black-secondary;
 
+        select_box{
+            z-index: 3;
+            background-color: $black-secondary;
+        }
+
         input {
             width: 100%;
             border: none;

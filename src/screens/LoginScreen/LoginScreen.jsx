@@ -45,7 +45,7 @@ const LoginScreen = ({isLoggedIn,login, resetError}) => {
 
     return (<>
         {isLoggedIn && localStorage.token ?
-            <Redirect to="/" />
+            <Redirect to="/job" />
             :
         <div className="login">
         <div className="col-9 col-md-7 col-lg-5 col-xl-4 mx-auto login-form">

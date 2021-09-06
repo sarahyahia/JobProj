@@ -1,22 +1,19 @@
-@import '../../base';
+// @import '../../base';
 
-body, html {
-    height: 100%;
-    
-}
+
 
 .Col__box_emp{
     background-color: rgba(19, 18, 19, 0.6) ;
-    height: 900px;
-    padding: 60px 68px 40px;
+    height: fit-content;
+    padding: 60px 68px 40px 40px;
     border-radius: 2%;
+    margin: 15vh 0 10vh 0;
 }
 
 .empReg-form{
-    margin: 10vh 0 10vh 0;
-    height: 900px;
+    height: 1200px;
     width:50vw;
-    margin-bottom: 10vh;
+    // margin-bottom: 10vh;
 }
 .empReg {
     overflow: hidden;
@@ -35,7 +32,7 @@ body, html {
     bottom:0;
     left:0;
     right:0;
-    z-index: -3 ;
+    z-index: -1 ;
     filter: brightness(0.5);
 }
 
@@ -48,7 +45,7 @@ body, html {
 /* for X-Small devices */
 @media (max-width: 575.98px) {
     .Col__box{
-        height: 100%;
+        height: fit-content;
         width: 100%;
     }
     .empReg .empReg-form {

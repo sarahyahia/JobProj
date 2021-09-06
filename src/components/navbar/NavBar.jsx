@@ -18,8 +18,10 @@ const NavBar = () => {
               <Link  className="navLink"  to={`/Shows`} style={{ textDecoration: 'none'}}> 
                 Add a Job
               </Link>
-
-              <Link className="navLink" to={`/emp/register`} style={{ textDecoration: 'none' }}> 
+              <Link  className="navLink"  to={`/emp`} style={{ textDecoration: 'none'}}> 
+                Search for employees
+              </Link>
+              <Link className="navLink" to={`/job`} style={{ textDecoration: 'none' }}> 
                 Search for Jobs
             </Link>
                 </Nav>

@@ -30,8 +30,8 @@ const authReducer = (state = initialState, action) => {
                     msg: action.payload,
                     created: true
                 },
-                error: null
-                // accessToken: action.accessToken
+                error: null,
+                accessToken: action.accessToken,
             };
         
         case EMAIL_CHANGED:

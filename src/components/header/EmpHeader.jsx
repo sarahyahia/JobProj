@@ -7,27 +7,48 @@ import {FiLogOut} from "react-icons/fi";
 import { withRouter, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {logout} from '../../store/actions/auth'
-import {searchjob} from '../../store/actions/job'
+import {searchemp} from '../../store/actions/emp'
+import{Form} from 'react-bootstrap';
 
-const Header = ({isLoggedIn, logout, searchjob}) => {
+import Select from 'react-select';
 
-    const [search,setSearch] =useState('')
+const EmpHeader = ({isLoggedIn, logout, searchemp}) => {
+
+    const [search,setSearch] =useState('');
+    const [option,setOption] =useState('');
     let history = useHistory();
-    
+    const options = [
+        { value: 'little_bio', label: 'Biography' },
+        { value: 'programming_language', label: 'Programming Language' },
+        { value: 'city', label: 'city' },
+        { value: 'experience_level', label: 'Experience Level' },
+        { value: 'job_title', label: 'Job Title' },
+        { value: 'all', label: 'All' },
+
+    ]
+
+    const handleChange =(e)=>{
+        setOption(e.target.value)
+    }
     const handleSubmit=(e)=>{
         e.preventDefault();
-        searchjob(search)
-        history.push(`/search=${search}`);
+        const params= `${option}=${search}`
+        searchemp(params)
+        history.push(`/search/${option}=${search}`);
     }
 
     return (
         <div className="header">
             <form onSubmit={handleSubmit}>
+            <select className="select_box" value={option} onChange={handleChange} name="cars" id="cars">
+               {options.map((item)=> (<option value={item.value}>{item.label}</option>))}
+            </select>
                 <input 
                     type="text" 
                     placeholder="Search"
                     value={search} 
                     onChange={(e)=>setSearch(e.target.value)} />
+
                 <button type="submit">
                     <AiOutlineSearch size={22} />
                 </button>
@@ -52,9 +73,9 @@ const mapDispatchToProps = (dispatch) => ({
     logout: () => {
         dispatch(logout())
     },
-    searchjob:(search)=>{
-        dispatch(searchjob(search))
+    searchemp:(search)=>{
+        dispatch(searchemp(search))
     }
   });
   
-  export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
+  export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EmpHeader));
